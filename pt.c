@@ -33,15 +33,14 @@ uint64_t page_table_query(uint64_t pt, uint64_t vpn) {
 	int curr_entry,i;
 	uint64_t* curr_table = phys_to_virt(pt<<12);
 
-	for (i = 0;i < 5;i++) {
+	for (i = 0;i < 4;i++) {
 		curr_entry = (vpn >> (36-i*9)) & 0x1ff;
-		if ((curr_table[curr_entry] & 1)==0) { 
+		if (curr_table[curr_entry] ==0) { 
 			return NO_MAPPING;
 		}
-		if (i != 4) {
-			curr_table = phys_to_virt(curr_table[curr_entry]-1);
-		}
+		curr_table = phys_to_virt(curr_table[curr_entry]-1);
 	}
+	curr_entry  = vpn & 0x1ff;
 
-	return curr_table[curr_entry]>>12;
+	return (curr_table[curr_entry] ==0)?NO_MAPPING:(curr_table[curr_entry]>>12);
 }
