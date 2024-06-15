@@ -26,7 +26,6 @@ void page_table_update(uint64_t pt, uint64_t vpn, uint64_t ppn) {
 		return;
 	}
 	curr_table[curr_entry] = (ppn<<12)+1;
-	return;
 }
 
 
