@@ -42,5 +42,5 @@ uint64_t page_table_query(uint64_t pt, uint64_t vpn) {
 	}
 	curr_entry  = vpn & 0x1ff;
 
-	return (curr_table[curr_entry] ==0)?NO_MAPPING:(curr_table[curr_entry]>>12);
+	return (curr_table[curr_entry] ==0)?NO_MAPPING:((curr_table[curr_entry]-1)>>12);
 }
